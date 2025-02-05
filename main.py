@@ -15,17 +15,14 @@ from helpers.format_response import format_response_error
 from middlewares import limiter
 from middlewares.exception import exception_handler_middleware
 
-
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     await initiate_database()
     yield
-
-
 app = FastAPI(lifespan=lifespan)
+
 app.state.limiter = limiter
 app.add_middleware(SlowAPIMiddleware)
-
 limiter.enabled = False
 
 # Enable CORS (Cross-Origin Resource Sharing)

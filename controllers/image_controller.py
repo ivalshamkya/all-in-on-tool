@@ -10,7 +10,6 @@ route = APIRouter()
 @limiter.limit("15/hour")
 async def compress_image_endpoint(request: Request, file: UploadFile = File(...), quality: int = 50):
     try:
-        return format_response_success(
-            data=str(compress_image(file, quality)))
+        return format_response_success(data=compress_image(file, quality))
     except HTTPException as exc:
         raise HTTPException(500, exc)
